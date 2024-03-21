@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using MVC_Session_03_Demo.Models;
+using MVC_Session_03_Demo.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

@@ -13,7 +13,10 @@ namespace MVC_Session_03_Demo
 	{
 		public static void Main(string[] args)
 		{
-			CreateHostBuilder(args).Build().Run();
+			//CreateHostBuilder(args).Build().Run();
+			var hostBuilder = CreateHostBuilder(args).Build();
+
+			hostBuilder.Run();
 		}
 
 		public static IHostBuilder CreateHostBuilder(string[] args) =>
