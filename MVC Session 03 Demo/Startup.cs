@@ -15,12 +15,11 @@ namespace MVC_Session_03_Demo
 {
 	public class Startup
 	{
+		public IConfiguration Configuration { get; }
 		public Startup(IConfiguration configuration)
 		{
 			Configuration = configuration;
 		}
-
-		public IConfiguration Configuration { get; }
 
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
@@ -33,7 +32,7 @@ namespace MVC_Session_03_Demo
 
 			services.AddDbContext<ApplicationDbContext>(options =>
 			{
-				options.UseSqlServer("Server = .; Database = MVCApplicationG03; Trusted_Connection = True");
+				options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
 			});
 		}
 

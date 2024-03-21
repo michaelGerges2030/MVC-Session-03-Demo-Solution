@@ -17,7 +17,7 @@ public class ApplicationDbContext: DbContext
             
         }
 
-     //   protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+       //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		   //=> optionsBuilder.UseSqlServer("Server = .; Database = MVCApplicationG03; Trusted_Connection = True");
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
