@@ -66,6 +66,7 @@ namespace MVC_Session_03_Demo.Controllers
 
 		
 		[HttpPost]
+		[ValidateAntiForgeryToken]
         public IActionResult Edit([FromRoute]int id, Department department)
 		{
 
