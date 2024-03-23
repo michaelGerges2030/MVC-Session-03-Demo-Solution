@@ -10,48 +10,16 @@ using System.Threading.Tasks;
 
 namespace Route.C41.G03.BLL.Repositories
 {
-    public class EmployeeRepository: IEmployeeRepository
+    public class EmployeeRepository: GenericRepository<Employee>, IEmployeeRepository
     {
-        private readonly ApplicationDbContext _dbCcontext;
-
-        public EmployeeRepository(ApplicationDbContext dbContext)
+        public EmployeeRepository(ApplicationDbContext context): base(context)
         {
-            _dbCcontext = dbContext;
+            
         }
 
-        public int Add(Employee entity)
+        public IQueryable<Employee> GetEmployeeByAddress(string address)
         {
-            _dbCcontext.Employees.Add(entity);
-            return _dbCcontext.SaveChanges();
-        }
-
-        public int Update(Employee entity)
-        {
-            _dbCcontext.Employees.Update(entity);
-            return _dbCcontext.SaveChanges();
-        }
-
-        public int Delete(Employee entity)
-        {
-            _dbCcontext.Employees.Remove(entity);
-            return _dbCcontext.SaveChanges();
-        }
-
-        public Employee Get(int id)
-        {
-            //var Employee = _dbCcontext.Employees.Local.Where( D => D.Id == id).FirstOrDefault();
-            //if (Employee == null)
-            //	Employee = _dbCcontext.Employees.Where(D => D.Id == id).FirstOrDefault();
-            //return Employee;
-
-            //return _dbCcontext.Find<Employee>(id);
-            return _dbCcontext.Employees.Find(id);
-
-        }
-
-        public IEnumerable<Employee> GetAll()
-        {
-            return _dbCcontext.Employees.AsNoTracking().ToList();
+            return _dbCcontext.Employees.Where(e => e.Address.ToLower() == address.ToLower());
         }
     }
 }

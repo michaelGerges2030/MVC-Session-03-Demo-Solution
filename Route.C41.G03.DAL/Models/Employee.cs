@@ -23,9 +23,8 @@ namespace Route.C41.G03.DAL.Models
         [EnumMember(Value = "PartTime")]
         PartTime = 2
     }
-    public class Employee
+    public class Employee: ModelBase
     {
-        public int Id { get; set; }
 
         [MinLength(5, ErrorMessage = "Min Length Of Name Is 5 Chars")]
         public string Name { get; set; }

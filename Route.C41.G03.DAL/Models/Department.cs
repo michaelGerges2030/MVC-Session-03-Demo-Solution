@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Route.C41.G03.DAL.Models
 {
-	public class Department
+	public class Department: ModelBase
 	{
-        public int Id { get; set; }
+
         [Required(ErrorMessage = "Code Is Required!")]
         public string Code { get; set; }
         [Required(ErrorMessage = "Name Is Required!")]
