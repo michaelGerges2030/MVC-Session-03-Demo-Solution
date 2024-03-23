@@ -92,5 +92,32 @@ namespace MVC_Session_03_Demo.Controllers
 				return View(department);
             }
 		}
-    }
+
+		[HttpGet]
+		public IActionResult Delete(int? id)
+		{
+			return Details(id, "Delete");
+		}
+
+		[HttpPost]
+		public IActionResult Delete(Department department) 
+		{
+			try
+			{ 
+            _departmentRepo.Delete(department);
+            return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                if (_env.IsDevelopment())
+                    ModelState.AddModelError(string.Empty, ex.Message);
+
+                else
+                    ModelState.AddModelError(string.Empty, "An Error occured during updating the Department");
+
+                return View(department);
+            }
+        }
+
+	}
 }
