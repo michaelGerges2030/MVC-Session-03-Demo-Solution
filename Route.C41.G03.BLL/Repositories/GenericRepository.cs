@@ -16,7 +16,7 @@ namespace Route.C41.G03.BLL.Repositories
 
         public GenericRepository(ApplicationDbContext dbContext)
         {
-
+            _dbCcontext = dbContext;
         }
 
         public int Add(T entity)

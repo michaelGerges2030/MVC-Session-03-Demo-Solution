@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Route.C41.G03.BLL.Interfaces
 {
-    internal interface IGenericRepository<T> where T : ModelBase
+    public interface IGenericRepository<T> where T : ModelBase
     {
         IEnumerable<T> GetAll();
 
