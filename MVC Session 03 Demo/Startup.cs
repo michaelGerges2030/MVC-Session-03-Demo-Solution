@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MVC_Session_03_Demo.Extensions;
 using Route.C41.G03.BLL.Interfaces;
 using Route.C41.G03.BLL.Repositories;
 using Route.C41.G03.DAL.Data.Configurations;
@@ -35,10 +36,13 @@ namespace MVC_Session_03_Demo
 			services.AddDbContext<ApplicationDbContext>(options =>
 			{
 				options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
-			});
+			}, ServiceLifetime.Scoped)/*.AddApplicationServices()*/;
 
-			services.AddScoped<IDepartmentRepository, DepartmentRepository>();
-            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+
+			//ApplicationServicesExtensions.AddApplicationServices(services);
+			services.AddApplicationServices();
+
+
         }
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
