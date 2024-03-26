@@ -18,7 +18,11 @@ namespace MVC_Session_03_Demo.Controllers
         }
         public IActionResult Index()
         {
-           var employees = _employeeRepo.GetAll();  
+
+            ViewData["Message"] = "Hello, ViewData";
+            ViewBag.Message = "Hello, ViewBag";
+
+            var employees = _employeeRepo.GetAll();  
             return View(employees);
         }
 
