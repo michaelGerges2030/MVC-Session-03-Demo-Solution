@@ -29,7 +29,7 @@
 
 @if(Model.Count() > 0)
 {
-    <table class="table table-striped table-hover">
+    <table class="table-lg table-striped table-hover">
         <thead>
             <tr>
                 <th>@Html.DisplayNameFor(E => E.Name)</th>
@@ -38,6 +38,7 @@
                 <th>@Html.DisplayNameFor(E => E.Salary)</th>
                 <th>@Html.DisplayNameFor(E => E.IsActive)</th>
                 <th>@Html.DisplayNameFor(E => E.Address)</th>
+                <th>@Html.DisplayNameFor(E => E.Department)</th>
                 <th>@Html.DisplayNameFor(E => E.PhoneNumber)</th>
                 <th>@Html.DisplayNameFor(E => E.Gender)</th>
                 <th>@Html.DisplayNameFor(E => E.EmployeeType)</th>
@@ -58,6 +59,7 @@
                     <td>@Html.DisplayFor(E => employee.Salary)</td>
                     <td>@Html.DisplayFor(E => employee.IsActive)</td>
                     <td>@Html.DisplayFor(E => employee.Address)</td>
+                    <td>@employee.Department?.Name</td>
                     <td>@Html.DisplayFor(E => employee.PhoneNumber)</td>
                     <td>@Html.DisplayFor(E => employee.Gender)</td>
                     <td>@Html.DisplayFor(E => employee.EmployeeType)</td>

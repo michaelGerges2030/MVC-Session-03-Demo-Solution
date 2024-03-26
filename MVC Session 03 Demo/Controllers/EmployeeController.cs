@@ -11,13 +11,17 @@ namespace MVC_Session_03_Demo.Controllers
     {
         private readonly IEmployeeRepository _employeeRepo;
         private readonly IWebHostEnvironment _env;
-        public EmployeeController(IEmployeeRepository employeeRepository,IWebHostEnvironment env)
+        //private readonly IDepartmentRepository _departmentRepo;
+
+        public EmployeeController(IEmployeeRepository employeeRepository,IWebHostEnvironment env /*IDepartmentRepository departmentRepo*/)
         {
             _employeeRepo = employeeRepository;
             _env = env;
+            //_departmentRepo = departmentRepo;
         }
         public IActionResult Index()
         {
+            TempData.Keep();
 
             //ViewData["Message"] = "Hello, ViewData";
             //ViewBag.Message = "Hello, ViewBag";
@@ -29,10 +33,13 @@ namespace MVC_Session_03_Demo.Controllers
         [HttpGet]
         public IActionResult Create() 
         {
+            //ViewData["Departments"] = _departmentRepo.GetAll();
+            //ViewBag.Departments = _departmentRepo.GetAll();
             return View();
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(Employee employee)
         {
         if (ModelState.IsValid)
