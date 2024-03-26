@@ -12,5 +12,7 @@ namespace Route.C41.G03.BLL.Interfaces
     {
     
         IQueryable<Employee> GetEmployeeByAddress(string address);  
+
+        IQueryable<Employee> SearchByName(string name); 
     }
 }
