@@ -19,8 +19,8 @@ namespace MVC_Session_03_Demo.Controllers
         public IActionResult Index()
         {
 
-            ViewData["Message"] = "Hello, ViewData";
-            ViewBag.Message = "Hello, ViewBag";
+            //ViewData["Message"] = "Hello, ViewData";
+            //ViewBag.Message = "Hello, ViewBag";
 
             var employees = _employeeRepo.GetAll();  
             return View(employees);
@@ -38,8 +38,16 @@ namespace MVC_Session_03_Demo.Controllers
         if (ModelState.IsValid)
             {
                 var count = _employeeRepo.Add(employee);
-                if (count > 0) 
-                    return RedirectToAction(nameof(Index)); 
+                
+                if (count > 0)
+                {
+                    TempData["Message"] = "Department is Created Successfully";
+                }
+                else
+                {
+                    TempData["Message"] = "An Error Has Occured, Department Not Created :(";
+                }
+                return RedirectToAction(nameof(Index));
             }
         return View(employee);
         }

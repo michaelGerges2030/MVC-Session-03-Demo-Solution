@@ -3,15 +3,22 @@
 @{
     ViewData["Title"] = "Index";
 }
+@if (!string.IsNullOrEmpty(@TempData["Message"] as string))
+{
+    <div class="alert alert-primary">
+        @TempData["Message"]
+    </div>
+}
 
-<div class="alert alert-warning">
-    @ViewData["Message"];
+
+@* <div class="alert alert-warning">
+    @ViewData["Message"]
 </div>
 
 <div class="alert alert-success">
-    @ViewBag.Message;
+    @ViewBag.Message
 </div>
-
+ *@
 
 <h1>All Employees</h1>
 <br />
