@@ -56,5 +56,8 @@ namespace Route.C41.G03.DAL.Models
         [Display(Name = "Hiring Date")]
         public DateTime HiringDate { get; set; }
 
+        public int? DepartmentId { get; set; }
+        public Department Department { get; set; }
+
     }
 }
