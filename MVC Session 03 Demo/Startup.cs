@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MVC_Session_03_Demo.Extensions;
+using MVC_Session_03_Demo.Helpers;
 using Route.C41.G03.BLL.Interfaces;
 using Route.C41.G03.BLL.Repositories;
 using Route.C41.G03.DAL.Data.Configurations;
@@ -42,6 +43,7 @@ namespace MVC_Session_03_Demo
 			//ApplicationServicesExtensions.AddApplicationServices(services);
 			services.AddApplicationServices();
 
+			services.AddAutoMapper(M => M.AddProfile(new MappingProfiles()));
 
         }
 
