@@ -15,15 +15,15 @@ namespace MVC_Session_03_Demo.Controllers
 {
     public class EmployeeController : Controller
     {
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly IEmployeeRepository _employeeRepo;
-        private readonly IWebHostEnvironment _env;
+        private readonly IHostEnvironment _env;
         //private readonly IDepartmentRepository _departmentRepo;
 
-        public EmployeeController(IMapper mapper,IEmployeeRepository employeeRepository,IWebHostEnvironment env /*IDepartmentRepository departmentRepo*/)
+        public EmployeeController(IUnitOfWork unitOfWork,IMapper mapper,IHostEnvironment env /*IDepartmentRepository departmentRepo*/)
         {
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _employeeRepo = employeeRepository;
             _env = env;
             //_departmentRepo = departmentRepo;
         }
@@ -39,11 +39,11 @@ namespace MVC_Session_03_Demo.Controllers
 
             if (string.IsNullOrEmpty(searchInp))
             {
-                 employees = _employeeRepo.GetAll();
+                 employees = _unitOfWork.EmployeeRepository.GetAll();
             }
             else
             {
-                employees = _employeeRepo.SearchByName(searchInp.ToLower());
+                employees = _unitOfWork.EmployeeRepository.SearchByName(searchInp.ToLower());
             }
 
             var mappedEmps = _mapper.Map<IEnumerable<Employee>, IEnumerable<EmployeeViewModel>>(employees);
@@ -81,8 +81,10 @@ namespace MVC_Session_03_Demo.Controllers
 
                 var mapperEmp = _mapper.Map<EmployeeViewModel, Employee>(employeeVM);    
 
-                var count = _employeeRepo.Add(mapperEmp);
-                
+                 _unitOfWork.EmployeeRepository.Add(mapperEmp);
+
+                var count = _unitOfWork.Complete();
+
                 if (count > 0)
                 {
                     TempData["Message"] = "Department is Created Successfully";
@@ -101,7 +103,7 @@ namespace MVC_Session_03_Demo.Controllers
         if (!id.HasValue)
                 return BadRequest();    
         
-        var employee = _employeeRepo.Get(id.Value);
+        var employee = _unitOfWork.EmployeeRepository.Get(id.Value);
 
 
         var mappedEmp = _mapper.Map<Employee, EmployeeViewModel>(employee);
@@ -130,7 +132,8 @@ namespace MVC_Session_03_Demo.Controllers
             try
             {
                 var mappedEmp = _mapper.Map<EmployeeViewModel, Employee>(employeeVM);
-                _employeeRepo.Update(mappedEmp);
+                _unitOfWork.EmployeeRepository.Update(mappedEmp);
+                _unitOfWork.Complete();
                 return RedirectToAction(nameof(Index));
             }
             catch(Exception ex)
@@ -158,8 +161,9 @@ namespace MVC_Session_03_Demo.Controllers
         {
             try
             {
-                var mappedEmp = _mapper.Map<EmployeeViewModel, Employee>(employeeVM);    
-                _employeeRepo.Delete(mappedEmp);
+                var mappedEmp = _mapper.Map<EmployeeViewModel, Employee>(employeeVM);
+                _unitOfWork.EmployeeRepository.Delete(mappedEmp);
+                _unitOfWork.Complete();
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)

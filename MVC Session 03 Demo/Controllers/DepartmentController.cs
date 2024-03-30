@@ -14,20 +14,20 @@ namespace MVC_Session_03_Demo.Controllers
 {
 	public class DepartmentController : Controller
 	{
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly IDepartmentRepository _departmentRepo;
-        private readonly IWebHostEnvironment _env;
+        private readonly IHostEnvironment _env;
 
-        public DepartmentController(IMapper mapper,IDepartmentRepository departmentRepository, IWebHostEnvironment env)
+        public DepartmentController(IUnitOfWork unitOfWork,IMapper mapper, IHostEnvironment env)
 		{
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _departmentRepo = departmentRepository;
             _env = env;
         }
 
 		public IActionResult Index()
 		{
-			var departments = _departmentRepo.GetAll();
+			var departments =_unitOfWork.DepartmentRepository.GetAll();
 			var mappedDepts = _mapper.Map<IEnumerable<Department>, IEnumerable<DepartmentViewModel>>(departments);
 			return View(mappedDepts);
 		}
@@ -46,8 +46,11 @@ namespace MVC_Session_03_Demo.Controllers
 
 				var mappedDept = _mapper.Map<DepartmentViewModel, Department>(departmentVM);
 				
-				var count = _departmentRepo.Add(mappedDept);	
-				if (count > 0)
+				 _unitOfWork.DepartmentRepository.Add(mappedDept);
+				var count = _unitOfWork.Complete();
+
+
+                if (count > 0)
 					return RedirectToAction(nameof(Index));
 			}
 		   return View(departmentVM);	
@@ -59,7 +62,7 @@ namespace MVC_Session_03_Demo.Controllers
 			if (!id.HasValue)
 				return BadRequest();
 
-			var department = _departmentRepo.Get(id.Value);
+			var department = _unitOfWork.DepartmentRepository.Get(id.Value);
 
 			var mappedDept = _mapper.Map<Department, DepartmentViewModel>(department);
 
@@ -90,7 +93,7 @@ namespace MVC_Session_03_Demo.Controllers
 			try
 			{
 				var mappedDept = _mapper.Map<DepartmentViewModel, Department>(departmentVM);
-				_departmentRepo.Update(mappedDept);
+				_unitOfWork.DepartmentRepository.Update(mappedDept);
 				return RedirectToAction(nameof(Index));
 			}
 			catch(Exception ex) 
@@ -117,7 +120,7 @@ namespace MVC_Session_03_Demo.Controllers
 			try
 			{
 				var mappedDept = _mapper.Map<DepartmentViewModel, Department>(departmentVM);
-            _departmentRepo.Delete(mappedDept);
+            _unitOfWork.DepartmentRepository.Delete(mappedDept);
             return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)

@@ -6,10 +6,13 @@ namespace MVC_Session_03_Demo.Extensions
 {
     public static class ApplicationServicesExtensions
     {
-        public static void AddApplicationServices(this IServiceCollection services)
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-            services.AddScoped<IDepartmentRepository, DepartmentRepository>();
-            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            //services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            //services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();  
+            return services;
         }
 
     }
