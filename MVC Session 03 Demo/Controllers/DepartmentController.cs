@@ -27,7 +27,7 @@ namespace MVC_Session_03_Demo.Controllers
 
 		public IActionResult Index()
 		{
-			var departments =_unitOfWork.DepartmentRepository.GetAll();
+			var departments =_unitOfWork.Repository<Department>().GetAll();
 			var mappedDepts = _mapper.Map<IEnumerable<Department>, IEnumerable<DepartmentViewModel>>(departments);
 			return View(mappedDepts);
 		}
@@ -46,7 +46,7 @@ namespace MVC_Session_03_Demo.Controllers
 
 				var mappedDept = _mapper.Map<DepartmentViewModel, Department>(departmentVM);
 				
-				 _unitOfWork.DepartmentRepository.Add(mappedDept);
+				 _unitOfWork.Repository<Department>().Add(mappedDept);
 				var count = _unitOfWork.Complete();
 
 
@@ -62,7 +62,7 @@ namespace MVC_Session_03_Demo.Controllers
 			if (!id.HasValue)
 				return BadRequest();
 
-			var department = _unitOfWork.DepartmentRepository.Get(id.Value);
+			var department = _unitOfWork.Repository<Department>().Get(id.Value);
 
 			var mappedDept = _mapper.Map<Department, DepartmentViewModel>(department);
 
@@ -93,7 +93,7 @@ namespace MVC_Session_03_Demo.Controllers
 			try
 			{
 				var mappedDept = _mapper.Map<DepartmentViewModel, Department>(departmentVM);
-				_unitOfWork.DepartmentRepository.Update(mappedDept);
+				_unitOfWork.Repository<Department>().Update(mappedDept);
 				return RedirectToAction(nameof(Index));
 			}
 			catch(Exception ex) 
@@ -120,7 +120,7 @@ namespace MVC_Session_03_Demo.Controllers
 			try
 			{
 				var mappedDept = _mapper.Map<DepartmentViewModel, Department>(departmentVM);
-            _unitOfWork.DepartmentRepository.Delete(mappedDept);
+            _unitOfWork.Repository<Department>().Delete(mappedDept);
             return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
