@@ -1,8 +1,9 @@
 ﻿@model EmployeeViewModel
-@inject IDepartmentRepository _departmentRepo;
+@inject IUnitOfWork _unitOfWork
 
 @{
-    var departments = new SelectList(/* ViewData["Departments"] as IEnumerable<Department> */ /* ViewBag.Departments */ _departmentRepo.GetAll(), nameof(Department.Id), nameof(Department.Name));
+    var departments = new SelectList(/* ViewData["Departments"] as IEnumerable<Department> */ /* ViewBag.Departments */ 
+    _unitOfWork.DepartmentRepository.GetAll(), nameof(Department.Id), nameof(Department.Name));
 }
 
 <div class="form-group">
