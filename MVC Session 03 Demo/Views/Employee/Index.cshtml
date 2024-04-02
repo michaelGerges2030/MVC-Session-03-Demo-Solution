@@ -70,7 +70,7 @@
             @foreach(var employee in Model)
             {
                 <tr>
-                    <td>    <img src="~/files/images/@employee.ImageName" class="img-fluid rounded-circle" width="75" height="75" alt="Employee Image" /></td>
+                    <td> <img src="~/files/images/@employee.ImageName" class="img-fluid rounded-circle" width="75" height="75" alt="Employee Image" /></td>
                     <td>@Html.DisplayFor(E => employee.Name)</td>
                  @*    <td>@Html.DisplayFor(E => employee.Age)</td> *@
                     <td>@Html.DisplayFor(E => employee.Email)</td>

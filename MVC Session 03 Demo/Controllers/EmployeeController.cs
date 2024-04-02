@@ -92,6 +92,9 @@ namespace MVC_Session_03_Demo.Controllers
             if (employee is null)
                 return NotFound();
 
+           if (viewName.Equals("Delete", StringComparison.OrdinalIgnoreCase) || viewName.Equals("Edit", StringComparison.OrdinalIgnoreCase))
+                TempData["ImageName"] = employee.ImageName;
+
             return View(viewName, mappedEmp);
         }
 
@@ -112,6 +115,19 @@ namespace MVC_Session_03_Demo.Controllers
 
             try
             {
+                if(employeeVM.Image  == null)
+                {
+
+                    if (TempData["ImageName"] != null)
+                        employeeVM.ImageName = TempData["ImageName"] as string;
+                }
+                else
+                {
+                    DocumentSettings.DeleteFile(TempData["ImageName"] as string, "images");
+                    employeeVM.ImageName = DocumentSettings.UploadFile(employeeVM.Image, "images");
+                }
+             
+
                 var mappedEmp = _mapper.Map<EmployeeViewModel, Employee>(employeeVM);
                 _unitOfWork.Repository<Employee>().Update(mappedEmp);
                 _unitOfWork.Complete();
@@ -142,10 +158,20 @@ namespace MVC_Session_03_Demo.Controllers
         {
             try
             {
+                employeeVM.ImageName = TempData["ImageName"] as string;
+
                 var mappedEmp = _mapper.Map<EmployeeViewModel, Employee>(employeeVM);
                 _unitOfWork.Repository<Employee>().Delete(mappedEmp);
-                _unitOfWork.Complete();
-                return RedirectToAction(nameof(Index));
+               
+                
+                var count = _unitOfWork.Complete();
+
+                if (count > 0)
+                {
+                    DocumentSettings.DeleteFile(employeeVM.ImageName, "images");
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(employeeVM);    
             }
             catch (Exception ex)
             {
