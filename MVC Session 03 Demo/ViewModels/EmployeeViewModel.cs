@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using System;
+using Microsoft.AspNetCore.Http;
 
 namespace MVC_Session_03_Demo.ViewModels
 {
@@ -22,10 +23,9 @@ namespace MVC_Session_03_Demo.ViewModels
     }
     public class EmployeeViewModel
     {
+           public int Id { get; set; }
 
-        public int Id { get; set; }
-
-        [MinLength(5, ErrorMessage = "Min Length Of Name Is 5 Chars")]
+            [MinLength(5, ErrorMessage = "Min Length Of Name Is 5 Chars")]
             public string Name { get; set; }
 
             [Range(22, 30)]
@@ -60,8 +60,10 @@ namespace MVC_Session_03_Demo.ViewModels
         //[Display(Name = "Creation Date")]
         //public DateTime CreationDate { get; set; } = DateTime.Now;
 
-        public int? DepartmentId { get; set; }
+            public int? DepartmentId { get; set; }
             public Department Department { get; set; }
+            public IFormFile Image { get; set; }
+            public string ImageName { get; set; }
 
-        }
+    }
     }

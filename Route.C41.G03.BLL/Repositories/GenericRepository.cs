@@ -20,22 +20,19 @@ namespace Route.C41.G03.BLL.Repositories
         }
 
         public void Add(T entity)
-            => _dbCcontext.SaveChanges();
+            => _dbCcontext.Set<T>().Add(entity);
         
 
         public void Update(T entity)
-           =>_dbCcontext.SaveChanges();
-        
+           => _dbCcontext.Set<T>().Update(entity);
+
 
         public void Delete(T entity)
-           =>_dbCcontext.SaveChanges();
-        
+           => _dbCcontext.Set<T>().Remove(entity);
+
 
         public T Get(int id)
-        {
-            return _dbCcontext.Set<T>().Find(id);
-
-        }
+            =>_dbCcontext.Set<T>().Find(id);
 
         public IEnumerable<T> GetAll()
         {

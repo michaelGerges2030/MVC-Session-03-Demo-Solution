@@ -47,8 +47,8 @@ namespace MVC_Session_03_Demo.Controllers
 				var mappedDept = _mapper.Map<DepartmentViewModel, Department>(departmentVM);
 				
 				 _unitOfWork.Repository<Department>().Add(mappedDept);
+				
 				var count = _unitOfWork.Complete();
-
 
                 if (count > 0)
 					return RedirectToAction(nameof(Index));

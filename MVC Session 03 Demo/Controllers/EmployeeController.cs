@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.Hosting;
+using MVC_Session_03_Demo.Helpers;
 using MVC_Session_03_Demo.ViewModels;
 using Route.C41.G03.BLL.Interfaces;
 using Route.C41.G03.BLL.Repositories;
@@ -19,23 +20,16 @@ namespace MVC_Session_03_Demo.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IHostEnvironment _env;
-        //private readonly IDepartmentRepository _departmentRepo;
 
-        public EmployeeController(IUnitOfWork unitOfWork,IMapper mapper,IHostEnvironment env /*IDepartmentRepository departmentRepo*/)
+        public EmployeeController(IUnitOfWork unitOfWork,IMapper mapper,IHostEnvironment env)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _env = env;
-            //_departmentRepo = departmentRepo;
         }
 
         public IActionResult Index(string searchInp)
         {
-            //TempData.Keep();
-
-            //ViewData["Message"] = "Hello, ViewData";
-            //ViewBag.Message = "Hello, ViewBag";
-
             var employees = Enumerable.Empty<Employee>();
             var employeeRepo = _unitOfWork.Repository<Employee>() as EmployeeRepository;
 
@@ -55,8 +49,6 @@ namespace MVC_Session_03_Demo.Controllers
         [HttpGet]
         public IActionResult Create() 
         {
-            //ViewData["Departments"] = _departmentRepo.GetAll();
-            //ViewBag.Departments = _departmentRepo.GetAll();
             return View();
         }
 
@@ -66,29 +58,16 @@ namespace MVC_Session_03_Demo.Controllers
         {
         if (ModelState.IsValid)
             {
+               employeeVM.ImageName = DocumentSettings.UploadFile(employeeVM.Image, "images");
 
-                //var mapperEmp = new Employee()
-                //{
-                //    Name = employeeVM.Name,
-                //    Address = employeeVM.Address,
-                //    Age = employeeVM.Age,   
-                //    Salary = employeeVM.Salary,
-                //    Email = employeeVM.Email,
-                //    PhoneNumber = employeeVM.PhoneNumber,
-                //    IsActive = employeeVM.IsActive,
-                //    HiringDate = employeeVM.HiringDate,
-                //    CreationDate = employeeVM.CreationDate,
-                //    IsDeleted = employeeVM.IsDeleted
-                //};
-
-                var mapperEmp = _mapper.Map<EmployeeViewModel, Employee>(employeeVM);    
+                var mapperEmp = _mapper.Map<EmployeeViewModel, Employee>(employeeVM);
 
                  _unitOfWork.Repository<Employee>().Add(mapperEmp);
 
                 var count = _unitOfWork.Complete();
 
                 if (count > 0)
-                {
+                {    
                     TempData["Message"] = "Department is Created Successfully";
                 }
                 else
