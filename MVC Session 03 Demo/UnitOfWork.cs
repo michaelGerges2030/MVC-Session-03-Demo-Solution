@@ -4,6 +4,7 @@ using Route.C41.G03.DAL.Data.Configurations;
 using Route.C41.G03.DAL.Models;
 using System;
 using System.Collections;
+using System.Threading.Tasks;
 
 namespace MVC_Session_03_Demo
 {
@@ -38,15 +39,14 @@ namespace MVC_Session_03_Demo
            return _repositories[key] as IGenericRepository<T>;
         }
 
-        public int Complete()
+        public async Task<int> Complete()
         {
-            return _dbContext.SaveChanges();
+            return await _dbContext.SaveChangesAsync();
         }
 
-        public void Dispose()
-        { 
-             _dbContext.Dispose();
+        public async ValueTask DisposeAsync()
+        {
+            await _dbContext.DisposeAsync();
         }
-
     }
 }

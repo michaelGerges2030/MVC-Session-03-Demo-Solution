@@ -18,10 +18,14 @@ namespace Route.C41.G03.BLL.Repositories
         }
 
         public IQueryable<Employee> GetEmployeeByAddress(string address)
-            =>_dbCcontext.Employees.Where(E => E.Address.ToLower() == address.ToLower());
-        
+            =>_dbContext.Employees.Where(E => E.Address.ToLower() == address.ToLower());
+
+        public override async Task<IEnumerable<Employee>> GetAllAsync()
+        {
+            return await _dbContext.Set<Employee>().Include(E => E.Department).AsNoTracking().ToListAsync();
+        }
 
         public IQueryable<Employee> SearchByName(string name)
-            => _dbCcontext.Employees.Where(E => E.Name.ToLower().Contains(name));
+            => _dbContext.Employees.Where(E => E.Name.ToLower().Contains(name));
     }
 }

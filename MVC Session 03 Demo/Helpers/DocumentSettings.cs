@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace MVC_Session_03_Demo.Helpers
 {
     public static class DocumentSettings
     {
         
-        public static string UploadFile(IFormFile file, string folderName)
+        public static async Task<string> UploadFile(IFormFile file, string folderName)
         {
             //string folderPath = $"E:\\Desktop\\Route Academy\\Full Stack\\02 BackEnd\\MVC\\MVC Session 03\\MVC Session 03 Demo Solution\\MVC Session 03 Demo\\wwwroot\\files\\{FolderName}";
             //string folderPath = $"{Directory.GetCurrentDirectory()}\\wwwroot\\files\\{FolderName}";
@@ -23,7 +24,7 @@ namespace MVC_Session_03_Demo.Helpers
 
             using var fileStream = new FileStream(filePath, FileMode.Create);
 
-            file.CopyTo(fileStream);
+            await file.CopyToAsync(fileStream);
 
             return fileName;
         }
