@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,6 +11,7 @@ using MVC_Session_03_Demo.Helpers;
 using Route.C41.G03.BLL.Interfaces;
 using Route.C41.G03.BLL.Repositories;
 using Route.C41.G03.DAL.Data.Configurations;
+using Route.C41.G03.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,7 +47,31 @@ namespace MVC_Session_03_Demo
 
 			services.AddAutoMapper(M => M.AddProfile(new MappingProfiles()));
 
-        }
+
+			services.AddIdentity<ApplicationUser, IdentityRole>( options =>
+			{
+				options.Password.RequiredUniqueChars = 2;
+				options.Password.RequireDigit = true;
+				options.Password.RequireNonAlphanumeric = true;
+				options.Password.RequireUppercase = true;
+				options.Password.RequireLowercase = true;
+				options.Password.RequiredLength = 7;
+
+				options.Lockout.AllowedForNewUsers = true;
+				options.Lockout.MaxFailedAccessAttempts = 5;
+				options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromHours(1);	
+
+				options.User.RequireUniqueEmail = true;
+			
+			}).AddEntityFrameworkStores<ApplicationDbContext>();
+
+			services.AddAuthentication();
+
+			//services.AddScoped<UserManager<ApplicationUser>>();
+			//services.AddScoped<SignInManager<ApplicationUser>>();
+			//services.AddScoped<RoleManager<ApplicationUser>>();
+
+		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

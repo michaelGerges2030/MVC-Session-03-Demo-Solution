@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Route.C41.G03.DAL.Data.Configurations
 {
-public class ApplicationDbContext: IdentityDbContext
+public class ApplicationDbContext: IdentityDbContext<ApplicationUser>
 	{
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options):base(options)
