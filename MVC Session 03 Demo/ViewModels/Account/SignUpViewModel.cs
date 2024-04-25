@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MVC_Session_03_Demo.ViewModels.User
+namespace MVC_Session_03_Demo.ViewModels.Account
 {
 	public class SignUpViewModel
 	{
@@ -15,7 +15,6 @@ namespace MVC_Session_03_Demo.ViewModels.User
 		[Display(Name = "First Name")]
 		public string FName { get; set; }
 
-
 		[Required(ErrorMessage = "Last Name Is Required!")]
 		[Display(Name = "Last Name")]
 		public string LName { get; set; }
@@ -23,6 +22,7 @@ namespace MVC_Session_03_Demo.ViewModels.User
 		[Required(ErrorMessage = "Password Is Required!")]
 		[DataType(DataType.Password)]
 		public string Password { get; set; }
+
 		[Required(ErrorMessage = "Confirm Password Is Required!")]
 		[DataType(DataType.Password)]
 		[Compare(nameof(Password), ErrorMessage = "Confirm Password doesn't match with Password!")]

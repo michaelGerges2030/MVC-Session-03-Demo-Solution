@@ -48,7 +48,7 @@ namespace MVC_Session_03_Demo
 			services.AddAutoMapper(M => M.AddProfile(new MappingProfiles()));
 
 
-			services.AddIdentity<ApplicationUser, IdentityRole>( options =>
+			services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 			{
 				options.Password.RequiredUniqueChars = 2;
 				options.Password.RequireDigit = true;
@@ -59,13 +59,14 @@ namespace MVC_Session_03_Demo
 
 				options.Lockout.AllowedForNewUsers = true;
 				options.Lockout.MaxFailedAccessAttempts = 5;
-				options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromHours(1);	
+				options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromHours(1);
 
 				options.User.RequireUniqueEmail = true;
-			
-			}).AddEntityFrameworkStores<ApplicationDbContext>();
 
-			services.AddAuthentication();
+			}).AddEntityFrameworkStores<ApplicationDbContext>();
+			//.AddDefaultTokenProviders();
+
+			//services.AddAuthentication();
 
 			//services.AddScoped<UserManager<ApplicationUser>>();
 			//services.AddScoped<SignInManager<ApplicationUser>>();
