@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace MVC_Session_03_Demo.Controllers
 {
-    public class AccountController : Controller
-    {
+	public class AccountController : Controller
+	{
 		private readonly UserManager<ApplicationUser> _userManager;
 		private readonly SignInManager<ApplicationUser> _signInManager;
 
 		public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
-        {
+		{
 			_userManager = userManager;
 			_signInManager = signInManager;
 		}
@@ -68,28 +68,41 @@ namespace MVC_Session_03_Demo.Controllers
 		[HttpPost]
 		public async Task<IActionResult> SignIn(SignInViewModel model)
 		{
-			if (ModelState.IsValid) 
+			if (ModelState.IsValid)
 			{
-			    var user = await _userManager.FindByEmailAsync(model.Email);	
+				var user = await _userManager.FindByEmailAsync(model.Email);
 				if (user is not null)
 				{
 					var flag = await _userManager.CheckPasswordAsync(user, model.Password);
-                    if (flag)
+					if (flag)
 					{
 						var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
 
 						if (result.IsLockedOut)
 							ModelState.AddModelError(string.Empty, "Your Account Is Locked!");
-						if (result.Succeeded)	
+						if (result.Succeeded)
 							return RedirectToAction(nameof(HomeController.Index), "Home");
 						if (result.IsNotAllowed)
 							ModelState.AddModelError(string.Empty, "Your Account Is Not Confirmed yet!");
-					}    
-                 }
+					}
+				}
 				ModelState.AddModelError(string.Empty, "Invalid Login");
-             }
-			return View(model);	
 			}
+			return View(model);
 		}
+
+		#endregion
+
+
+		#region Sign Out
+
+		public async new Task<IActionResult> SignOut()
+		{
+			await _signInManager.SignOutAsync();
+			return RedirectToAction(nameof(SignIn));
+		}
+
 		#endregion
 	}
+
+}
