@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
@@ -14,6 +15,7 @@ using System.Threading.Tasks;
 
 namespace MVC_Session_03_Demo.Controllers
 {
+	[Authorize]
 	public class DepartmentController : Controller
 	{
         private readonly IUnitOfWork _unitOfWork;

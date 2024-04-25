@@ -72,6 +72,22 @@ namespace MVC_Session_03_Demo
 			//services.AddScoped<SignInManager<ApplicationUser>>();
 			//services.AddScoped<RoleManager<ApplicationUser>>();
 
+
+			services.ConfigureApplicationCookie(options =>
+			{
+				//options.AccessDeniedPath = "/Account/AccessDenied";
+				options.AccessDeniedPath = "/Home/Error";
+				options.ExpireTimeSpan = TimeSpan.FromDays(1);
+				options.LoginPath = "/Account/SignIn";
+			});
+
+
+			services.AddAuthentication(options =>
+			{
+				//options.DefaultAuthenticateScheme = "Identity.Application";
+				//options.DefaultChallengeScheme = "Identity.Application";
+
+			});
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -92,6 +108,7 @@ namespace MVC_Session_03_Demo
 
 			app.UseRouting();
 
+			app.UseAuthentication();
 			app.UseAuthorization();
 
 			app.UseEndpoints(endpoints =>
