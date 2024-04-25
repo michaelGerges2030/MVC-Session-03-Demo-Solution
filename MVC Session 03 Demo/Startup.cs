@@ -63,8 +63,8 @@ namespace MVC_Session_03_Demo
 
 				options.User.RequireUniqueEmail = true;
 
-			}).AddEntityFrameworkStores<ApplicationDbContext>();
-			//.AddDefaultTokenProviders();
+			}).AddEntityFrameworkStores<ApplicationDbContext>()
+			.AddDefaultTokenProviders();
 
 			//services.AddAuthentication();
 

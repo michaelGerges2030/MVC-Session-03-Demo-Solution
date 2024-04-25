@@ -16,8 +16,8 @@ namespace MVC_Session_03_Demo.Services.EmailSender
         public async Task SendAsync(string from, string recipients, string subject, string body)
 		{
 
-			var senderEmail = _configuration["EmailSettings.SenderEmail"];
-			var senderPassword = _configuration["EmailSettings.SenderPassword"];
+			var senderEmail = _configuration["EmailSettings:SenderEmail"];
+			var senderPassword = _configuration["EmailSettings:SenderPassword"];
 
 			var emailMessage = new MailMessage();
 			emailMessage.From = new MailAddress(from);
@@ -27,7 +27,7 @@ namespace MVC_Session_03_Demo.Services.EmailSender
 			emailMessage.IsBodyHtml = true;	
 
 
-			var smtpClient = new SmtpClient(_configuration["EmailSettings.SmtpClientServer"], int.Parse(_configuration["EmailSettings.SmtpClientPort"]))
+			var smtpClient = new SmtpClient(_configuration["EmailSettings:SmtpClientServer"], int.Parse(_configuration["EmailSettings:SmtpClientPort"]))
 			{
 				Credentials = new NetworkCredential(senderEmail, senderPassword),
 				EnableSsl = true
