@@ -162,7 +162,7 @@ namespace MVC_Session_03_Demo.Controllers
 		{
 			TempData["Email"] = email;
 			TempData["Token"] = token;
-           return View();
+            return View();
         }
 
 		[HttpPost]
